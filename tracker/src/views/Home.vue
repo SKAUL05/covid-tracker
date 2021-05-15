@@ -78,7 +78,8 @@ export default {
       return data
     },
     async fetchNews() {
-      const res = await fetch('https://newsapi.org/v2/everything?q=covid&sortBy=publishedAt&apiKey=4dbc17e007ab436fb66416009dfb59a8&language=en')
+      console.log(process.env.API_KEY)
+      const res = await fetch('https://newsapi.org/v2/everything?q=covid&sortBy=publishedAt&apiKey=e8815b5868564414b8c2c482c4d9f7c3&language=en')
       const data = await res.json()
       return data
     },
