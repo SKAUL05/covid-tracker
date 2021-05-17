@@ -42,7 +42,11 @@ export default {
             }
         },
         truncate(str, max, suffix) {
+            if (str){
             return str.length < max ? str : `${str.substr(0, str.substr(0, max - suffix.length).lastIndexOf(' '))}${suffix}`
+            }else{
+                ""
+            }
         } 
     }
 }
