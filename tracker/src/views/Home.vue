@@ -79,9 +79,10 @@ export default {
     },
     async fetchNews() {
       console.log(process.env.API_KEY)
-      const res = await fetch('https://cors.bridged.cc/https://newsapi.org/v2/everything?q=covid&sortBy=publishedAt&apiKey=e8815b5868564414b8c2c482c4d9f7c3&language=en')
+      const res = await fetch('https://cors.bridged.cc/https://newsdata.io/api/1/news?apikey=pub_166fdb99a98ee367ed171eabd118b4e7175&q=Covid&language=en')
       const data = await res.json()
-      return data
+     return data
+
     },
     getCountryData(country) {
       this.stats = country
@@ -104,7 +105,7 @@ export default {
     console.log(data)
     const newsData = await this.fetchNews()
     console.log(newsData)
-    this.articles = newsData.articles
+    this.articles = newsData.results
     this.dataDate = data.Date
     this.stats = data.Global
     this.countries = data.Countries
