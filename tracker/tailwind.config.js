@@ -9,7 +9,9 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      objectFit: ['hover', 'focus'],
+    },
   },
   plugins: [],
 }

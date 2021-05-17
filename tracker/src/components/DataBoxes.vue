@@ -19,7 +19,7 @@
 
 
         <div class="shadow-md bg-red-200 p-10 text-center rounded">
-            <h3 class="text-3xl text-blue-900 font-bold mb-4">
+            <h3 class="text-3xl text-red-900 font-bold mb-4">
                 Deaths
             </h3>
 
@@ -38,7 +38,7 @@
 
 
         <div class="shadow-md bg-green-200 p-10 text-center rounded">
-            <h3 class="text-3xl text-blue-900 font-bold mb-4">
+            <h3 class="text-3xl text-green-900 font-bold mb-4">
                 Recovered
             </h3>
 
