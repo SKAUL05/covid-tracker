@@ -79,13 +79,7 @@ export default {
     },
     async fetchNews() {
       console.log(process.env.API_KEY)
-      const settings = {
-      method: 'GET',
-      headers: {
-        "Access-Control-Allow-Origin":"*"
-      }
-    }
-      const res = await fetch('https://newsdata.io/api/1/news?apikey=pub_166fdb99a98ee367ed171eabd118b4e7175&q=covid&language=en', settings)
+      const res = await fetch('https://cors.bridged.cc/https://newsapi.org/v2/everything?q=covid&sortBy=publishedAt&apiKey=e8815b5868564414b8c2c482c4d9f7c3&language=en')
       const data = await res.json()
       return data
     },
@@ -110,7 +104,7 @@ export default {
     console.log(data)
     const newsData = await this.fetchNews()
     console.log(newsData)
-    this.articles = newsData.results
+    this.articles = newsData.articles
     this.dataDate = data.Date
     this.stats = data.Global
     this.countries = data.Countries
