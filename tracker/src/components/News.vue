@@ -1,6 +1,6 @@
 <template>
 <div>
-    <div class="p-10 grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5" >
+    <div class="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5" >
         <!--Card 1-->
         <div class="cursor-pointer rounded overflow-hidden shadow-lg" v-for="article in articles" :key="article" @click="newsLink(article.link)">
         <img class="object-contain md:object-scale-down h-auto" :src="article.image_url" alt="">
