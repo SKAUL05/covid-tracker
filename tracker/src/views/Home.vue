@@ -4,12 +4,12 @@
       <ul class="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row">
         <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
           <a class="text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal" v-on:click="toggleTabs(1)" v-bind:class="{'text-black-600 bg-white': openTab !== 1, 'text-white bg-blue-600': openTab === 1}">
-            Stats
+            <i class="fas fa-chart-area"></i> Stats
           </a>
         </li>
         <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
           <a class="text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal" v-on:click="toggleTabs(2)" v-bind:class="{'text-black-600 bg-white': openTab !== 2, 'text-white bg-blue-600': openTab === 2}">
-            News
+            <i class="fas fa-newspaper"></i> News
           </a>
         </li>
       </ul>
@@ -23,7 +23,9 @@
                   <CountrySelect @get-country="getCountryData" :countries="countries"/>
                   <button @click="clearCountryData" v-if="stats.Country" class="bg-green-700 text-white roounded p-3 mt-8 focus:outline-none hover:bg-green-600 mb-2" >
                     Clear Country
-                  </button>
+                  </button> <br/>
+                  <VaccineTitle :text="vaccTitle" :dataDate="vaccDate" />
+                  <VaccineBoxes :stats="vaccStats" @get-vaccine-country="getVaccineCountry" :countries="vaccCountries" />
               </main>
               <main class="flex flex-col align-center justify-center text-center" v-else>
                 <div class="text-gray-500 text-3xl mt-10 mb-6">
@@ -50,6 +52,8 @@ import DataTitle from '@/components/DataTitle'
 import DataBoxes from '@/components/DataBoxes'
 import CountrySelect from '@/components/CountrySelect'
 import News from '@/components/News'
+import VaccineTitle from '@/components/VaccineTitle'
+import VaccineBoxes from '@/components/VaccineBoxes'
 
 export default {
   name: 'Home',
@@ -57,15 +61,21 @@ export default {
     DataTitle,
     DataBoxes,
     CountrySelect,
-    News
+    News,
+    VaccineTitle,
+    VaccineBoxes
   },
   data() {
     return {
       loading: true,
       title: 'Global',
+      vaccTitle:'India',
+      vaccDate:'',
       dataDate: '',
       stats: {},
+      vaccStats: {},
       countries: [],
+      vaccCountries: [],
       articles: [],
       loadingImage: require('../assets/hourglass.gif'),
       openTab: 1
@@ -73,20 +83,30 @@ export default {
   },
   methods: {
     async fetchCovidData() {
-      const res = await fetch('https://api.covid19api.com/summary')
+      const res = await fetch('https://cors.bridged.cc/https://api.covid19api.com/summary')
       const data = await res.json()
       return data
     },
     async fetchNews() {
       console.log(process.env.API_KEY)
-      const res = await fetch('https://cors.bridged.cc/https://newsdata.io/api/1/news?apikey=pub_166fdb99a98ee367ed171eabd118b4e7175&q=Covid&language=en')
+      const res = await fetch('https://cors.bridged.cc/https://newsdata.io/api/1/news?apikey=pub_166fdb99a98ee367ed171eabd118b4e7175&q=COVID&language=en')
       const data = await res.json()
      return data
 
     },
+    async fetchVaccData(){
+      const vacc_data = await fetch('https://covid.ourworldindata.org/data/owid-covid-data.json')
+      const vacc = await vacc_data.json()
+      return vacc
+    },
     getCountryData(country) {
       this.stats = country
       this.title = country.Country
+    },
+    getVaccineCountry(country){
+      console.log(country)
+      this.vaccTitle = country.location
+      this.vaccStats = country.data[country.data.length-1]
     },
     async clearCountryData() {
       this.loading = true
@@ -109,6 +129,12 @@ export default {
     this.dataDate = data.Date
     this.stats = data.Global
     this.countries = data.Countries
+    const vaccData = await this.fetchVaccData()
+    console.log(vaccData)
+    this.vaccTitle = vaccData.IND.location
+    this.vaccDate = vaccData.IND.data[vaccData.IND.data.length-1].date
+    this.vaccStats = vaccData.IND.data[vaccData.IND.data.length-1]
+    this.vaccCountries = vaccData
     this.loading = false
 
   }
