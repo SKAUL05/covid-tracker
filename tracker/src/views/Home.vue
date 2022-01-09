@@ -79,7 +79,7 @@ export default {
     },
     async fetchNews() {
       console.log(process.env.API_KEY)
-      const res = await fetch('https://cors.bridged.cc/https://newsdata.io/api/1/news?apikey=pub_166fdb99a98ee367ed171eabd118b4e7175&q=Covid&language=en')
+      const res = await fetch('https://newsdata.io/api/1/news?apikey=pub_166fdb99a98ee367ed171eabd118b4e7175&q=Covid&language=en')
       const data = await res.json()
      return data
 
